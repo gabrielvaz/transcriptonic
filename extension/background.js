@@ -265,9 +265,19 @@ function downloadTranscript(index, isWebhookEnabled) {
 
                 // Format timestamp for human-readable filename and sanitise to prevent invalid filenames
                 const timestamp = new Date(meeting.meetingStartTimestamp)
-                const formattedTimestamp = timestamp.toLocaleString("default", timeFormat).replace(/[\/:]/g, "-")
+                const year = timestamp.getFullYear();
+                const month = (timestamp.getMonth() + 1).toString().padStart(2, '0');
+                const day = timestamp.getDate().toString().padStart(2, '0');
+                const hours = timestamp.getHours().toString().padStart(2, '0');
+                const minutes = timestamp.getMinutes().toString().padStart(2, '0');
+                const formattedTimestamp = `${year}-${month}-${day} ${hours}.${minutes}`;
 
-                const fileName = `TranscripTonic/Transcript-${sanitisedMeetingTitle} at ${formattedTimestamp}.txt`
+                let fileName;
+                if (sanitisedMeetingTitle !== "Google Meet call") {
+                    fileName = `${sanitisedMeetingTitle} - ${formattedTimestamp}.txt`;
+                } else {
+                    fileName = `Meet - ${formattedTimestamp}.txt`;
+                }
 
 
                 // Format transcript and chatMessages content
@@ -312,10 +322,10 @@ function downloadTranscript(index, isWebhookEnabled) {
                             chrome.downloads.download({
                                 // @ts-ignore
                                 url: dataUrl,
-                                filename: "TranscripTonic/Transcript.txt",
+                                filename: "Transcript.txt",
                                 conflictAction: "uniquify"
                             })
-                            console.log("Invalid file name. Transcript downloaded to TranscripTonic directory with simple file name.")
+                            console.log("Invalid file name. Transcript downloaded with simple file name.")
                             resolve("Transcript downloaded successfully with default file name")
 
                             // Logs anonymous errors to a Google sheet for swift debugging   
