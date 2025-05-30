@@ -33,21 +33,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 scrollTo({ top: 0, behavior: "smooth" })
                 if (response.success) {
                     if (response.message === "No recovery needed") {
-                        alert("Nothing to recover—you're on top of the world!")
+                        alert(chrome.i18n.getMessage("meetingsAlertNothingToRecover"))
                     }
                     else {
-                        alert("Last meeting recovered successfully!")
+                        alert(chrome.i18n.getMessage("meetingsAlertLastMeetingRecovered"))
                     }
                 }
                 else {
                     if (response.message === "No meetings found. May be attend one?") {
-                        alert(response.message)
+                        alert(chrome.i18n.getMessage("meetingsAlertNoMeetingsFound"))
                     }
                     else if (response.message === "Empty transcript and empty chatMessages") {
-                        alert("Nothing to recover—you're on top of the world!")
+                        alert(chrome.i18n.getMessage("meetingsAlertNothingToRecover"))
                     }
                     else {
-                        alert("Could not recover last meeting!")
+                        alert(chrome.i18n.getMessage("meetingsAlertCouldNotRecover"))
                         console.error(response.message)
                     }
                 }
@@ -95,10 +95,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         autoPostWebhookAfterMeeting: autoPostCheckbox.checked,
                         webhookBodyType: advancedWebhookBodyRadio.checked ? "advanced" : "simple"
                     }, function () {
-                        alert("Webhook URL saved!")
+                        alert(chrome.i18n.getMessage("meetingsAlertWebhookUrlSaved"))
                     })
                 }).catch((error) => {
-                    alert("Fine! No webhooks for you!")
+                    alert(chrome.i18n.getMessage("meetingsAlertNoWebhooksForYou"))
                     console.error("Webhook permission error:", error)
                 })
             }
@@ -176,20 +176,20 @@ function loadMeetings() {
 
                     const row = document.createElement("tr")
                     row.innerHTML = `
-                    <td>${meeting.meetingTitle || meeting.title || "Google Meet call"}</td>
+                    <td>${meeting.meetingTitle || meeting.title || chrome.i18n.getMessage("meetingsDefaultMeetingTitle")}</td>
                     <td>${timestamp} &nbsp; &#9679; &nbsp; ${durationString}</td>
                     <td>
                         ${(
                             () => {
                                 switch (meeting.webhookPostStatus) {
                                     case "successful":
-                                        return `<span class="status-success">Successful</span>`
+                                        return `<span class="status-success">${chrome.i18n.getMessage("meetingsStatusSuccessful")}</span>`
                                     case "failed":
-                                        return `<span class="status-failed">Failed</span>`
+                                        return `<span class="status-failed">${chrome.i18n.getMessage("meetingsStatusFailed")}</span>`
                                     case "new":
-                                        return `<span class="status-new">New</span>`
+                                        return `<span class="status-new">${chrome.i18n.getMessage("meetingsStatusNew")}</span>`
                                     default:
-                                        return `<span class="status-new">Unknown</span>`
+                                        return `<span class="status-new">${chrome.i18n.getMessage("meetingsStatusUnknown")}</span>`
                                 }
                             }
                         )()}
@@ -197,10 +197,10 @@ function loadMeetings() {
                     <td>
                         <div style="min-width: 128px; display: flex; gap: 1rem;">
                             <button class="download-button" data-index="${i}">
-                                <img src="./icons/download.svg" alt="Download this meeting transcript">
+                                <img src="./icons/download.svg" alt="${chrome.i18n.getMessage("meetingsAltDownloadTranscript")}">
                             </button>
                             <button class="post-button" data-index="${i}">
-                                ${meeting.webhookPostStatus === "new" ? `Post` : `Repost`}
+                                ${meeting.webhookPostStatus === "new" ? chrome.i18n.getMessage("meetingsButtonPost") : chrome.i18n.getMessage("meetingsButtonRepost")}
                                 <img src="./icons/webhook.svg" alt="" width="16px">
                             </button>
                         </div>
@@ -240,7 +240,7 @@ function loadMeetings() {
                                     requestWebhookAndNotificationPermission(resultSync.webhookUrl).then(() => {
                                         // Disable button and update text
                                         webhookPostButton.disabled = true
-                                        webhookPostButton.textContent = meeting.webhookPostStatus === "new" ? "Posting..." : "Reposting..."
+                                        webhookPostButton.textContent = meeting.webhookPostStatus === "new" ? chrome.i18n.getMessage("meetingsButtonPosting") : chrome.i18n.getMessage("meetingsButtonReposting")
 
                                         // Send message to background script to post webhook
                                         const index = parseInt(webhookPostButton.getAttribute("data-index") ?? "-1")
@@ -253,19 +253,19 @@ function loadMeetings() {
                                             const response = /** @type {ExtensionResponse} */ (responseUntyped)
                                             loadMeetings()
                                             if (response.success) {
-                                                alert("Posted successfully!")
+                                                alert(chrome.i18n.getMessage("meetingsAlertPostedSuccessfully"))
                                             }
                                             else {
                                                 console.error(response.message)
                                             }
                                         })
                                     }).catch((error) => {
-                                        alert("Fine! No webhooks for you!")
+                                        alert(chrome.i18n.getMessage("meetingsAlertNoWebhooksForYou"))
                                         console.error("Webhook permission error:", error)
                                     })
                                 }
                                 else {
-                                    alert("Please provide a webhook URL")
+                                    alert(chrome.i18n.getMessage("meetingsAlertProvideWebhookUrl"))
                                 }
                             })
                         })
@@ -273,7 +273,7 @@ function loadMeetings() {
                 }
             }
             else {
-                meetingsTable.innerHTML = `<tr><td colspan="4">Your next meeting will show up here</td></tr>`
+                meetingsTable.innerHTML = `<tr><td colspan="4">${chrome.i18n.getMessage("meetingsMsgNoMeetings")}</td></tr>`
             }
         }
     })

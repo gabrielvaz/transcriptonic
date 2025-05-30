@@ -7,15 +7,15 @@
 /** @type {ExtensionStatusJSON} */
 const extensionStatusJSON_bug = {
   "status": 400,
-  "message": `<strong>TranscripTonic encountered a new error</strong> <br /> Please report it <a href="https://github.com/vivek-nexus/transcriptonic/issues" target="_blank">here</a>.`
+  "message": `${chrome.i18n.getMessage("contentErrorEncountered")} <br /> ${chrome.i18n.getMessage("contentErrorPleaseReport")} <a href="https://github.com/vivek-nexus/transcriptonic/issues" target="_blank">${chrome.i18n.getMessage("contentErrorHere")}</a>.`
 }
 
-const reportErrorMessage = "There is a bug in TranscripTonic. Please report it at https://github.com/vivek-nexus/transcriptonic/issues"
+const reportErrorMessage = chrome.i18n.getMessage("contentReportError")
 /** @type {MutationObserverInit} */
 const mutationConfig = { childList: true, attributes: true, subtree: true, characterData: true }
 
 // Name of the person attending the meeting
-let userName = "You"
+let userName = chrome.i18n.getMessage("contentUserNameDefault")
 
 // Transcript array that holds one or more transcript blocks
 /** @type {TranscriptBlock[]} */
@@ -247,7 +247,7 @@ function meetingRoutines(uiType) {
       chrome.storage.sync.get(["operationMode"], function (resultSyncUntyped) {
         const resultSync = /** @type {ResultSync} */ (resultSyncUntyped)
         if (resultSync.operationMode === "manual") {
-          showNotification({ status: 400, message: "<strong>TranscripTonic is not running</strong> <br /> Turn on captions using the CC icon, if needed" })
+          showNotification({ status: 400, message: `<strong>${chrome.i18n.getMessage("contentNotRunning")}</strong> <br /> ${chrome.i18n.getMessage("contentNotRunningTurnOnCaptions")}` })
         }
         else {
           showNotification(extensionStatusJSON)
@@ -449,7 +449,7 @@ function chatMessagesMutationCallback(mutationsList) {
 // Pushes data in the buffer to transcript array as a transcript block
 function pushBufferToTranscript() {
   transcript.push({
-    "personName": personNameBuffer === "You" ? userName : personNameBuffer,
+    "personName": personNameBuffer === chrome.i18n.getMessage("contentUserNameDefault") ? userName : personNameBuffer,
     "timestamp": timestampBuffer,
     "transcriptText": transcriptTextBuffer
   })
@@ -466,6 +466,8 @@ function pushUniqueChatBlock(chatBlock) {
     chatBlock.chatMessageText.includes(item.chatMessageText)
   )
   if (!isExisting) {
+    // Update personName to use localized "You" if necessary
+    chatBlock.personName = chatBlock.personName === "You" ? userName : chatBlock.personName;
     console.log(chatBlock)
     chatMessages.push(chatBlock)
     overWriteChromeStorage(["chatMessages"], false)
@@ -669,7 +671,7 @@ function checkExtensionStatus() {
   return new Promise((resolve, reject) => {
     // Set default value as 200
     chrome.storage.local.set({
-      extensionStatusJSON: { status: 200, message: "<strong>TranscripTonic is running</strong> <br /> Do not turn off captions" },
+      extensionStatusJSON: { status: 200, message: `<strong>${chrome.i18n.getMessage("contentRunning")}</strong> <br /> ${chrome.i18n.getMessage("contentRunningDoNotTurnOffCaptions")}` },
     })
 
     // https://stackoverflow.com/a/42518434

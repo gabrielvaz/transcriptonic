@@ -62,7 +62,7 @@ chrome.runtime.onMessage.addListener(function (messageUnTyped, sender, sendRespo
         }
         else {
             /** @type {ExtensionResponse} */
-            const response = { success: false, message: "Invalid index" }
+            const response = { success: false, message: chrome.i18n.getMessage("backgroundInvalidIndex") }
             sendResponse(response)
         }
     }
@@ -234,11 +234,11 @@ function pickupLastMeetingFromStorage() {
                     })
                 }
                 else {
-                    reject("Empty transcript and empty chatMessages")
+                    reject(chrome.i18n.getMessage("backgroundEmptyTranscriptAndChat"))
                 }
             }
             else {
-                reject("No meetings found. May be attend one?")
+                reject(chrome.i18n.getMessage("meetingsAlertNoMeetingsFound"))
             }
         })
     })
@@ -261,7 +261,7 @@ function downloadTranscript(index, isWebhookEnabled) {
                 // Sanitise meeting title to prevent invalid file name errors
                 // https://stackoverflow.com/a/78675894
                 const invalidFilenameRegex = /[:?"*<>|~/\\\u{1}-\u{1f}\u{7f}\u{80}-\u{9f}\p{Cf}\p{Cn}]|^[.\u{0}\p{Zl}\p{Zp}\p{Zs}]|[.\u{0}\p{Zl}\p{Zp}\p{Zs}]$|^(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?=\.|$)/gui
-                let sanitisedMeetingTitle = "Google Meet call"
+                let sanitisedMeetingTitle = chrome.i18n.getMessage("meetingsDefaultMeetingTitle")
                 if (meeting.meetingTitle) {
                     sanitisedMeetingTitle = meeting.meetingTitle.replaceAll(invalidFilenameRegex, "_")
                 }
@@ -307,7 +307,7 @@ function downloadTranscript(index, isWebhookEnabled) {
                             conflictAction: "uniquify"
                         }).then(() => {
                             console.log("Transcript downloaded")
-                            resolve("Transcript downloaded successfully")
+                            resolve(chrome.i18n.getMessage("backgroundTranscriptDownloadedSuccess"))
 
                             // Increment anonymous transcript generated count to a Google sheet
                             fetch(`https://script.google.com/macros/s/AKfycbw4wRFjJcIoC5uDfscITSjNtUj83JVrBXKn44u9Cs0BoKNgyvt0A5hmG-xsJnlhfVu--g/exec?version=${chrome.runtime.getManifest().version}&isWebhookEnabled=${isWebhookEnabled}`, {
@@ -321,8 +321,8 @@ function downloadTranscript(index, isWebhookEnabled) {
                                 filename: "TranscripTonic/Transcript.txt",
                                 conflictAction: "uniquify"
                             })
-                            console.log("Invalid file name. Transcript downloaded to TranscripTonic directory with simple file name.")
-                            resolve("Transcript downloaded successfully with default file name")
+                            console.log(chrome.i18n.getMessage("backgroundTranscriptDownloadedDefaultName"))
+                            resolve(chrome.i18n.getMessage("backgroundTranscriptDownloadedSuccess"))
 
                             // Logs anonymous errors to a Google sheet for swift debugging   
                             fetch(`https://script.google.com/macros/s/AKfycbw4wRFjJcIoC5uDfscITSjNtUj83JVrBXKn44u9Cs0BoKNgyvt0A5hmG-xsJnlhfVu--g/exec?version=${chrome.runtime.getManifest().version}&code=009&error=${encodeURIComponent(err)}`, { mode: "no-cors" })
@@ -333,12 +333,12 @@ function downloadTranscript(index, isWebhookEnabled) {
                         })
                     }
                     else {
-                        reject(new Error("Failed to read blob"))
+                        reject(new Error(chrome.i18n.getMessage("backgroundFailedToReadBlob")))
                     }
                 }
             }
             else {
-                reject(new Error("Meeting at specified index not found"))
+                reject(new Error(chrome.i18n.getMessage("backgroundMeetingNotFoundAtIndex")))
             }
         })
     })
@@ -398,7 +398,7 @@ function postTranscriptToWebhook(index) {
                             // @ts-ignore - Pointless type error about resultLocal.meetings being undefined, which is already checked above.
                             resultLocal.meetings[index].webhookPostStatus = "successful"
                             chrome.storage.local.set({ meetings: resultLocal.meetings }, function () {
-                                resolve("Webhook posted successfully")
+                                resolve(chrome.i18n.getMessage("backgroundWebhookPostedSuccess"))
                             })
                         }).catch(error => {
                             console.error(error)
@@ -410,8 +410,8 @@ function postTranscriptToWebhook(index) {
                                 chrome.notifications.create({
                                     type: "basic",
                                     iconUrl: "icon.png",
-                                    title: "Could not post webhook!",
-                                    message: "Click to view status and retry. Check console for more details."
+                                    title: chrome.i18n.getMessage("backgroundNotificationTitleWebhookFailed"),
+                                    message: chrome.i18n.getMessage("backgroundNotificationMessageWebhookFailed")
                                 }, function (notificationId) {
                                     // Handle notification click
                                     chrome.notifications.onClicked.addListener(function (clickedNotificationId) {
@@ -426,11 +426,11 @@ function postTranscriptToWebhook(index) {
                         })
                     }
                     else {
-                        reject(new Error("Meeting at specified index not found"))
+                        reject(new Error(chrome.i18n.getMessage("backgroundMeetingNotFoundAtIndex")))
                     }
                 }
                 else {
-                    reject(new Error("No webhook URL configured"))
+                    reject(new Error(chrome.i18n.getMessage("backgroundNoWebhookUrlConfigured")))
                 }
             })
         })
@@ -505,18 +505,18 @@ function recoverLastMeeting() {
                 // Last meeting was not processed for some reason. Need to recover that data, process and download it.
                 if ((!lastSavedMeeting) || (resultLocal.meetingStartTimestamp !== lastSavedMeeting.meetingStartTimestamp)) {
                     processLastMeeting().then(() => {
-                        resolve("Recovered last meeting to the best possible extent")
+                        resolve(chrome.i18n.getMessage("backgroundRecoveredLastMeeting"))
                     }).catch((error) => {
                         // Fails if transcript is empty or webhook request fails or user never attended any meetings
                         reject(error)
                     })
                 }
                 else {
-                    resolve("No recovery needed")
+                    resolve(chrome.i18n.getMessage("backgroundNoRecoveryNeeded"))
                 }
             }
             else {
-                reject("No meetings found. May be attend one?")
+                reject(chrome.i18n.getMessage("meetingsAlertNoMeetingsFound"))
             }
         })
     })
