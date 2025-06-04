@@ -1,0 +1,71 @@
+{
+  "extensionName": {"message": "TranscripTonic"},
+  "extensionDescription": {"message": "Transcrições simples do Google Meet. Privado e de código aberto."},
+
+  "autoMode": {"message": "Modo automático"},
+  "autoModeDesc": {"message": "Obter transcrições de todas as reuniões"},
+  "manualMode": {"message": "Modo manual"},
+  "manualModeDesc": {"message": "Ative a transcrição conforme necessário usando o ícone CC no Google Meet"},
+  "inBothModes": {
+    "message": "Nos dois modos, a transcrição será baixada como um arquivo de texto ao final de cada reunião. Você também pode $LINK$ para integrar o TranscripTonic às suas ferramentas favoritas.",
+    "placeholders": {
+      "link": {"content": "<a href=\"meetings.html\" target=\"_blank\"><b>configurar webhooks</b></a>"}
+    }
+  },
+  "lastTenMeetings": {"message": "Últimas 10 reuniões ->"},
+  "getHelp": {"message": "Obter ajuda"},
+  "reportBug": {"message": "Reportar um bug"},
+  "notice": {"message": "Aviso"},
+  "anotherProject": {"message": "Outro projeto de"},
+
+  "meetingsTitle": {"message": "TranscripTonic—Reuniões"},
+  "meetingsHeader": {"message": "TranscripTonic"},
+  "meetingsLastTen": {"message": "Últimas 10 reuniões"},
+  "meetingTitle": {"message": "Título da reunião"},
+  "meetingTime": {"message": "Início e duração da reunião"},
+  "webhookStatus": {"message": "Status do webhook"},
+  "actions": {"message": "Ações"},
+  "recoverLast": {"message": "Recuperar última reunião"},
+  "webhooks": {"message": "Webhooks"},
+  "integrate": {"message": "Integre o TranscripTonic às suas ferramentas favoritas"},
+  "webhookUrl": {"message": "URL do webhook"},
+  "save": {"message": "Salvar"},
+  "autoPost": {"message": "Postar transcrição automaticamente após cada reunião, para a URL do webhook"},
+  "simpleBody": {"message": "Corpo simples"},
+  "simpleBodyDesc": {"message": "Dados pré-formatados, adequados para integrações sem código"},
+  "advancedBody": {"message": "Corpo avançado"},
+  "advancedBodyDesc": {"message": "Dados brutos, adequados para integrações com código"},
+  "sampleSimple": {"message": "Exemplo de corpo (simples)"},
+  "sampleAdvanced": {"message": "Exemplo de corpo (avançado)"},
+
+  "statusSuccessful": {"message": "Sucesso"},
+  "statusFailed": {"message": "Falhou"},
+  "statusNew": {"message": "Novo"},
+  "statusUnknown": {"message": "Desconhecido"},
+  "post": {"message": "Publicar"},
+  "repost": {"message": "Republicar"},
+  "posting": {"message": "Publicando..."},
+  "reposting": {"message": "Republicando..."},
+  "downloadAlt": {"message": "Baixar a transcrição desta reunião"},
+  "nextMeetingPlaceholder": {"message": "Sua próxima reunião aparecerá aqui"},
+
+  "webhookUrlSaved": {"message": "URL do webhook salva!"},
+  "noWebhooksForYou": {"message": "Nada de webhooks para você!"},
+  "couldNotDownload": {"message": "Não foi possível baixar a transcrição"},
+  "postedSuccessfully": {"message": "Publicado com sucesso!"},
+  "pleaseProvideWebhook": {"message": "Forneça uma URL de webhook"},
+  "nothingToRecover": {"message": "Nada para recuperar — você está no topo do mundo!"},
+  "recoveredSuccessfully": {"message": "Última reunião recuperada com sucesso!"},
+  "couldNotRecover": {"message": "Não foi possível recuperar a última reunião!"},
+
+  "notifCouldNotPostWebhook": {"message": "Não foi possível enviar o webhook!"},
+  "notifClickToView": {"message": "Clique para ver o status e tentar novamente. Verifique o console para mais detalhes."},
+
+  "noMeetingsFound": {"message": "Nenhuma reunião encontrada. Que tal participar de uma?"},
+  "emptyTranscript": {"message": "Transcrição e mensagens vazias"},
+
+  "statusRunning": {"message": "<strong>TranscripTonic está em execução</strong> <br /> Não desative as legendas"},
+  "statusNotRunning": {"message": "<strong>TranscripTonic não está em execução</strong> <br /> Ative as legendas pelo ícone CC, se necessário"},
+  "bugMessage": {"message": "<strong>TranscripTonic encontrou um novo erro</strong> <br /> Por favor, reporte em <a href=\"https://github.com/vivek-nexus/transcriptonic/issues\" target=\"_blank\">aqui</a>."},
+  "reportErrorMessage": {"message": "Há um bug no TranscripTonic. Por favor, reporte em https://github.com/vivek-nexus/transcriptonic/issues"}
+}

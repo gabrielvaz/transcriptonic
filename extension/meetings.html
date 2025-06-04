@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TranscripTonic—Meetings</title>
+<title>__MSG_meetingsTitle__</title>
     <style>
         @import url("https://fonts.googleapis.com/css2?family=SUSE:wght@400;700&display=swap");
 
@@ -272,19 +272,19 @@
 </head>
 
 <body>
-    <h1>TranscripTonic</h1>
+    <h1>__MSG_meetingsHeader__</h1>
 
     <div class="grid-container">
         <div>
-            <h2>Last 10 meetings</h2>
+            <h2>__MSG_meetingsLastTen__</h2>
             <div class="transcripts-section">
                 <table>
                     <thead>
                         <tr>
-                            <th>Meeting title</th>
-                            <th>Meeting start time and duration</th>
-                            <th>Webhook status</th>
-                            <th>Actions</th>
+                            <th>__MSG_meetingTitle__</th>
+                            <th>__MSG_meetingTime__</th>
+                            <th>__MSG_webhookStatus__</th>
+                            <th>__MSG_actions__</th>
                         </tr>
                     </thead>
                     <tbody id="transcripts-table">
@@ -292,23 +292,23 @@
                     </tbody>
                 </table>
 
-                <button id="recover-last-meeting">Recover last meeting</button>
+                <button id="recover-last-meeting">__MSG_recoverLast__</button>
             </div>
         </div>
 
         <div>
-            <h2>Webhooks</h2>
+            <h2>__MSG_webhooks__</h2>
             <div class="card">
                 <div class="webhook-header">
                     <!-- <h3>Configure webhooks</h3> -->
-                    <p><b>Integrate TranscripTonic with your favourite tools</b></p>
+                    <p><b>__MSG_integrate__</b></p>
                 </div>
 
                 <form id="webhook-url-form" class="form-field">
-                    <label for="webhook-url">Webhook URL</label>
+                    <label for="webhook-url">__MSG_webhookUrl__</label>
                     <div class="input-group">
                         <input type="url" id="webhook-url" placeholder="https://your-webhook-url.com">
-                        <button id="save-webhook">Save</button>
+                        <button id="save-webhook">__MSG_save__</button>
                     </div>
                 </form>
 
@@ -317,10 +317,7 @@
                 <form class="form-field">
                     <div class="checkbox-group">
                         <input type="checkbox" id="auto-post-webhook" checked>
-                        <label for="auto-post-webhook">
-                            Automatically post transcript after each
-                            meeting, to webhook URL
-                        </label>
+                        <label for="auto-post-webhook">__MSG_autoPost__</label>
                     </div>
                 </form>
 
@@ -329,15 +326,14 @@
                 <form class="form-field">
                     <div class="radio-item">
                         <input type="radio" name="webhook-body-type" id="simple-webhook-body" checked />
-                        <label for="simple-webhook-body"><b>Simple webhook body</b>
-                            <br /><span class="sub-text">Pre-formatted data, suitable for no-code
-                                integrations</span>
+                        <label for="simple-webhook-body"><b>__MSG_simpleBody__</b>
+                            <br /><span class="sub-text">__MSG_simpleBodyDesc__</span>
                         </label>
                     </div>
                     <div class="radio-item">
                         <input type="radio" name="webhook-body-type" id="advanced-webhook-body" />
-                        <label for="advanced-webhook-body"><b>Advanced webhook body</b> <br />
-                            <span class="sub-text">Raw data, suitable for code integrations</span>
+                        <label for="advanced-webhook-body"><b>__MSG_advancedBody__</b> <br />
+                            <span class="sub-text">__MSG_advancedBodyDesc__</span>
                         </label>
                     </div>
                 </form>
@@ -346,7 +342,7 @@
 
             <div class="card">
                 <details>
-                    <summary>Sample webhook body (simple)</summary>
+                    <summary>__MSG_sampleSimple__</summary>
                     <div class="code-block accordion-content">
                         <code>
                         <pre>
@@ -364,7 +360,7 @@
                 </details>
 
                 <details>
-                    <summary>Sample webhook body (advanced)</summary>
+                    <summary>__MSG_sampleAdvanced__</summary>
                     <div class="code-block accordion-content">
                         <code>
                             <pre>

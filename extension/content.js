@@ -7,10 +7,10 @@
 /** @type {ExtensionStatusJSON} */
 const extensionStatusJSON_bug = {
   "status": 400,
-  "message": `<strong>TranscripTonic encountered a new error</strong> <br /> Please report it <a href="https://github.com/vivek-nexus/transcriptonic/issues" target="_blank">here</a>.`
+  "message": chrome.i18n.getMessage("bugMessage")
 }
 
-const reportErrorMessage = "There is a bug in TranscripTonic. Please report it at https://github.com/vivek-nexus/transcriptonic/issues"
+const reportErrorMessage = chrome.i18n.getMessage("reportErrorMessage")
 /** @type {MutationObserverInit} */
 const mutationConfig = { childList: true, attributes: true, subtree: true, characterData: true }
 
@@ -247,7 +247,7 @@ function meetingRoutines(uiType) {
       chrome.storage.sync.get(["operationMode"], function (resultSyncUntyped) {
         const resultSync = /** @type {ResultSync} */ (resultSyncUntyped)
         if (resultSync.operationMode === "manual") {
-          showNotification({ status: 400, message: "<strong>TranscripTonic is not running</strong> <br /> Turn on captions using the CC icon, if needed" })
+          showNotification({ status: 400, message: chrome.i18n.getMessage("statusNotRunning") })
         }
         else {
           showNotification(extensionStatusJSON)
@@ -669,7 +669,7 @@ function checkExtensionStatus() {
   return new Promise((resolve, reject) => {
     // Set default value as 200
     chrome.storage.local.set({
-      extensionStatusJSON: { status: 200, message: "<strong>TranscripTonic is running</strong> <br /> Do not turn off captions" },
+      extensionStatusJSON: { status: 200, message: chrome.i18n.getMessage("statusRunning") },
     })
 
     // https://stackoverflow.com/a/42518434
