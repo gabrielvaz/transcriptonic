@@ -234,11 +234,11 @@ function pickupLastMeetingFromStorage() {
                     })
                 }
                 else {
-                    reject("Empty transcript and empty chatMessages")
+                    reject(chrome.i18n.getMessage("emptyTranscript"))
                 }
             }
             else {
-                reject("No meetings found. May be attend one?")
+                reject(chrome.i18n.getMessage("noMeetingsFound"))
             }
         })
     })
@@ -410,8 +410,8 @@ function postTranscriptToWebhook(index) {
                                 chrome.notifications.create({
                                     type: "basic",
                                     iconUrl: "icon.png",
-                                    title: "Could not post webhook!",
-                                    message: "Click to view status and retry. Check console for more details."
+                                    title: chrome.i18n.getMessage("notifCouldNotPostWebhook"),
+                                    message: chrome.i18n.getMessage("notifClickToView")
                                 }, function (notificationId) {
                                     // Handle notification click
                                     chrome.notifications.onClicked.addListener(function (clickedNotificationId) {
@@ -516,7 +516,7 @@ function recoverLastMeeting() {
                 }
             }
             else {
-                reject("No meetings found. May be attend one?")
+                reject(chrome.i18n.getMessage("noMeetingsFound"))
             }
         })
     })
