@@ -403,6 +403,18 @@
                     </div>
                 </details>
             </div>
+
+            <h2>Download settings</h2>
+            <div class="card">
+                <form id="download-settings-form" class="form-field">
+                    <label for="download-folder">Default folder</label>
+                    <input type="text" id="download-folder" placeholder="TranscripTonic">
+                    <label for="filename-format" style="margin-top:1rem;">Filename format</label>
+                    <input type="text" id="filename-format" placeholder="Transcript-{title} at {timestamp}.txt">
+                    <p class="sub-text">Use <code>{title}</code> and <code>{timestamp}</code> in the name.</p>
+                    <button id="save-download-settings">Save</button>
+                </form>
+            </div>
         </div>
     </div>
 

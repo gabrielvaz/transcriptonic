@@ -33,6 +33,7 @@ View video on [YouTube](https://www.youtube.com/watch?v=ARL6HbkakX4)
 TranscripTonic has two modes of operation.
 
 **In both modes, transcript will be downloaded as a text file at the end of each meeting.**
+You can customize the default folder and filename pattern from the **Last 10 meetings** page.
 
 - **Auto mode:** Automatically records transcripts for all meetings
 - **Manual mode:** Switch on TranscripTonic by clicking on captions icon in Google Meet (CC icon)

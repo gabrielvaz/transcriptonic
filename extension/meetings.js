@@ -10,6 +10,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const simpleWebhookBodyRadio = document.querySelector("#simple-webhook-body")
     const advancedWebhookBodyRadio = document.querySelector("#advanced-webhook-body")
     const recoverLastMeetingButton = document.querySelector("#recover-last-meeting")
+    const downloadSettingsForm = document.querySelector("#download-settings-form")
+    const downloadFolderInput = document.querySelector("#download-folder")
+    const filenameFormatInput = document.querySelector("#filename-format")
+    const saveDownloadSettings = document.querySelector("#save-download-settings")
 
     // Initial load of transcripts
     loadMeetings()
@@ -123,6 +127,28 @@ document.addEventListener("DOMContentLoaded", function () {
             // Save webhook URL and settings
             chrome.storage.sync.set({ webhookBodyType: advancedWebhookBodyRadio.checked ? "advanced" : "simple" }, function () { })
         })
+
+    if (downloadSettingsForm instanceof HTMLFormElement && downloadFolderInput instanceof HTMLInputElement && filenameFormatInput instanceof HTMLInputElement && saveDownloadSettings instanceof HTMLButtonElement) {
+        chrome.storage.sync.get(["downloadFolder", "filenameFormat"], function (resultSyncUntyped) {
+            const resultSync = /** @type {ResultSync} */ (resultSyncUntyped)
+            if (resultSync.downloadFolder) {
+                downloadFolderInput.value = resultSync.downloadFolder
+            }
+            if (resultSync.filenameFormat) {
+                filenameFormatInput.value = resultSync.filenameFormat
+            }
+        })
+
+        downloadSettingsForm.addEventListener("submit", function (e) {
+            e.preventDefault()
+            chrome.storage.sync.set({
+                downloadFolder: downloadFolderInput.value || "TranscripTonic",
+                filenameFormat: filenameFormatInput.value || "Transcript-{title} at {timestamp}.txt"
+            }, function () {
+                alert("Download settings saved!")
+            })
+        })
+    }
     }
 })
 
