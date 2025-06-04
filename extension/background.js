@@ -273,7 +273,14 @@ function downloadTranscript(index, isWebhookEnabled) {
                 const timestamp = new Date(meeting.meetingStartTimestamp)
                 const formattedTimestamp = timestamp.toLocaleString("default", timeFormat).replace(/[\/:]/g, "-")
 
-                const fileName = `TranscripTonic/Transcript-${sanitisedMeetingTitle} at ${formattedTimestamp}.txt`
+                chrome.storage.sync.get(["downloadFolder", "filenameFormat"], function (resultSyncUntyped) {
+                    const resultSync = /** @type {ResultSync} */ (resultSyncUntyped)
+                    const folder = resultSync.downloadFolder || "TranscripTonic"
+                    const pattern = resultSync.filenameFormat || "Transcript-{title} at {timestamp}.txt"
+                    const processedName = pattern
+                        .replaceAll("{title}", sanitisedMeetingTitle)
+                        .replaceAll("{timestamp}", formattedTimestamp)
+                    const fileName = `${folder}/${processedName}`
 
 
                 // Format transcript and chatMessages content
@@ -336,6 +343,7 @@ function downloadTranscript(index, isWebhookEnabled) {
                         reject(new Error("Failed to read blob"))
                     }
                 }
+            })
             }
             else {
                 reject(new Error("Meeting at specified index not found"))

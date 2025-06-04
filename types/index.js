@@ -81,6 +81,8 @@
  * @property {OperationMode} operationMode
  * @property {WebhookBodyType} webhookBodyType
  * @property {WebhookUrl} webhookUrl
+ * @property {DownloadFolder} downloadFolder
+ * @property {FilenameFormat} filenameFormat
  */
 
 /**
@@ -94,6 +96,12 @@
  */
 /**
  * @typedef {string} WebhookUrl URL of the webhook
+ */
+/**
+ * @typedef {string} DownloadFolder default folder to save transcripts
+ */
+/**
+ * @typedef {string} FilenameFormat naming format for downloaded transcripts
  */
 
 
